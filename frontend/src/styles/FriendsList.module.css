@@ -1,0 +1,73 @@
+.sidebar {
+  width: 30%;
+  background: linear-gradient(180deg, #1f1f2e, #2a2a3d);
+  color: white;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Friend Card */
+.friendCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px;
+  margin-bottom: 8px;
+
+  border-radius: 12px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.friendCard:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+}
+
+/* Avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+}
+
+/* Info */
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.status {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 200px;
+  }
+}
