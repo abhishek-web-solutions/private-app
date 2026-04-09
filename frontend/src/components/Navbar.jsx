@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <div className={styles.navbar}>
-      <h3 className={styles.logo}>ChatSphare</h3>
+      <h3 className={styles.logo}>ChatSphere</h3>
 
       <div className={styles.rightSection}>
         <button onClick={() => navigate("/chat")}>💬 Chat</button>
