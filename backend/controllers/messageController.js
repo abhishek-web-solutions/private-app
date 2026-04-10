@@ -8,6 +8,7 @@ export const sendMessage = async (req, res) => {
     senderId,
     receiverId,
     message,
+    image: req.file ? req.file.filename : "",
   });
 
   res.json(newMsg);

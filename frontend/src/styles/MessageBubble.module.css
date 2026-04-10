@@ -3,8 +3,7 @@
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
-  text-align: right;
-  max-width: 60%;
+  max-width: 50%;
   margin-left: auto;
 }
 
@@ -13,5 +12,11 @@
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
-  max-width: 60%;
+  max-width: 50%;
+}
+
+.image {
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 5px;
 }

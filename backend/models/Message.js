@@ -6,6 +6,7 @@ const messageSchema = new mongoose.Schema(
     receiverId: { type: String, required: true },
     groupId: String,
     message: { type: String, required: true },
+    image: String,
   },
   { timestamps: true },
 );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState, useRef } from "react";
 import API from "../api/axios";
 import socket from "../socket";
 import MessageBubble from "./MessageBubble";
@@ -10,6 +10,11 @@ const ChatWindow = ({ selectedFriend }) => {
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [file, setFile] = useState(null);
+  const fileRef = useRef();
+  const handleIconClick = () => {
+    fileRef.current.click();
+  };
 
   // 📥 Load old messages
   useEffect(() => {
@@ -38,20 +43,28 @@ const ChatWindow = ({ selectedFriend }) => {
 
   // 📤 Send message
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() && !file) return;
+    const formData = new FormData();
+    formData.append("senderId", senderId);
+    formData.append("receiverId", selectedFriend._id);
+    formData.append("message", input);
+    if (file) {
+      formData.append("image", file);
+    }
 
-    const msg = {
-      senderId,
-      receiverId: selectedFriend._id,
-      message: input,
-    };
+    // const msg = {
+    //   senderId,
+    //   receiverId: selectedFriend._id,
+    //   message: input,
+    // };
 
-    await API.post("/messages", msg);
+    const res = await API.post("/messages", formData);
 
-    socket.emit("sendMessage", msg);
+    socket.emit("sendMessage", res.data);
 
-    setMessages((prev) => [...prev, msg]);
+    setMessages((prev) => [...prev, res.data]);
     setInput("");
+    setFile(null);
   };
 
   if (!selectedFriend) {
@@ -64,18 +77,31 @@ const ChatWindow = ({ selectedFriend }) => {
 
       <div className={styles.messages}>
         {messages.map((m, i) => (
-          <MessageBubble
-            key={i}
-            msg={{
-              text: m.message,
-              sender: m.senderId === senderId ? "me" : "other",
-            }}
-          />
+          <MessageBubble key={i} msg={m} senderId={senderId} />
         ))}
       </div>
 
+      {file && (
+        <div className={styles.preview}>
+          <img src={URL.createObjectURL(file)} alt="Preview" />
+        </div>
+      )}
+
       <div className={styles.inputBox}>
-        <input value={input} onChange={(e) => setInput(e.target.value)} />
+        <input
+          className={styles.files}
+          type="file"
+          ref={fileRef}
+          style={{ display: "none" }}
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <button onClick={handleIconClick}>+</button>
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="type a message..."
+        />
+
         <button onClick={sendMessage}>Send</button>
       </div>
     </div>
